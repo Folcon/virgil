@@ -3,9 +3,9 @@
    [leiningen.core.eval :as eval]))
 
 (def overwrites
-  '[[virgil "0.1.9"]
-    [org.ow2.asm/asm "7.0"]
-    [org.clojure/tools.namespace "0.2.11"]])
+  '[[virgil "0.1.10"]
+    [org.ow2.asm/asm "9.4"]
+    [org.clojure/tools.namespace "1.4.1"]])
 
 (defn overwrite-dependencies [deps overwrites]
   (let [project->dep (zipmap (map first deps) deps)]

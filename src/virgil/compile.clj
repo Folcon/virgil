@@ -11,9 +11,6 @@
    [java.io
     File
     ByteArrayOutputStream]
-   [java.net
-    URL
-    URLClassLoader]
    [java.util.concurrent
     ConcurrentHashMap]
    [javax.tools
@@ -89,16 +86,7 @@
   compiler was run. See
   https://github.com/clojure-emacs/cider-nrepl/issues/463."
   []
-  ;; Code is rewritten from javax/tools/ToolProvider.java
-  (let [file (io/file (System/getProperty "java.home"))
-        file (if (.equalsIgnoreCase (.getName file) "jre")
-               (.getParentFile file)
-               file)
-        file (io/file file "lib" "tools.jar")
-        urls (into-array URL [(io/as-url file)])
-        cl (URLClassLoader/newInstance urls)
-        compiler-class (Class/forName "com.sun.tools.javac.api.JavacTool" false cl)]
-    (.newInstance compiler-class)))
+  (ToolProvider/getSystemJavaCompiler))
 
 (defn source->bytecode [opts diag name->source]
   (let [compiler (or (get-java-compiler)
